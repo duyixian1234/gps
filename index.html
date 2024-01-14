@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPS Stat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body>
+    <div
+      class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-4"
+    >
+      <div id="card" class="md:flex">
+        <div class="p-8">
+          <div
+            class="uppercase tracking-wide text-sm text-indigo-500 font-semibold"
+          >
+            GPS状态
+          </div>
+          <p class="mt-2 text-gray-500">经度: <span id="longitude"></span></p>
+          <p class="mt-2 text-gray-500">纬度: <span id="latitude"></span></p>
+          <p class="mt-2 text-gray-500">海拔: <span id="altitude"></span></p>
+          <p class="mt-2 text-gray-500">
+            设备倾角: <span id="device-angle"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <script>
+      function getGPS() {
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            document.getElementById("longitude").innerHTML =
+              position.coords.longitude;
+            document.getElementById("latitude").innerHTML =
+              position.coords.latitude;
+            document.getElementById("altitude").innerHTML =
+              position.coords.altitude;
+            document.getElementById("device-angle").innerHTML =
+              position.coords.heading;
+          },
+          function (error) {
+            document.getElementById("card").innerHTML = "请授予定位权限";
+          }
+        );
+      }
+      getGPS();
+      setInterval(getGPS, 1000);
+    </script>
+  </body>
+</html>
